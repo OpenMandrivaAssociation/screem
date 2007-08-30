@@ -6,7 +6,7 @@
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		Editors
 URL:		http://www.screem.org/
@@ -19,7 +19,7 @@ Patch2:		fix_miscompile.patch
 Requires(post): scrollkeeper
 Requires(postun): scrollkeeper
 Requires(post): GConf2 >= 2.3.3
-Requires(preun): Conf2 >= 2.3.3
+Requires(preun): GConf2 >= 2.3.3
 Requires:	dbus-x11
 BuildRequires:	GConf2 >= 2.3.3
 BuildRequires:	ImageMagick
