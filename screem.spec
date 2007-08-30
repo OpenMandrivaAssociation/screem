@@ -42,6 +42,7 @@ BuildRequires:	libgtkhtml2-devel >= 2.2.0
 BuildRequires:	libxml2-devel >= 2.4.3
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	scrollkeeper
+BuildRequires:	popt-devel
 %if %build_plf
 BuildRequires:	socks5-devel
 %endif
