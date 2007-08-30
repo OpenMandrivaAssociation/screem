@@ -28,8 +28,8 @@ BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	gnome-menus-devel
 BuildRequires:	gtkhtml2-devel
-BuildRequires:	gtksourceview-devel
-BuildRequires:	gtksourceview-devel >= 1.1.90
+#BuildRequires:	gtksourceview-devel >= 1.1.90 ?
+BuildRequires:	gtksourceview1-devel
 BuildRequires:	intltool
 BuildRequires:	krb5-devel
 BuildRequires:	krb5-server
