@@ -1,8 +1,3 @@
-%define	name	screem
-%define	version	0.14.1
-%define rel	10
-%define	release	%mkrel %{rel}
-
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 
@@ -10,46 +5,47 @@
 
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
-Version:	%{version}
-Release:	%{release}
+Version:	0.16.1
+Release:	%mkrel 1
 License:	GPL
 Group:		Editors
 URL:		http://www.screem.org/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-
-Source:		%{name}-%{version}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/screem/%{name}-%{version}.tar.gz
 # (fc) 0.6.2-2mdk fix dtd location in help file
 Patch0:		screem-0.14.1-docbooklocation.patch
 # (lenny) 0.9.3-2mdk use system wide intltool
 Patch1:		screem-intltool.patch
-Patch3:		screem-0.14.1-gnome-2.11-build-fix.patch
-# (fc) 0.14.1-10mdv don't use deprecated dbus api
-Patch4:		screem-0.14.1-deprecated.patch
-
+Patch2:		fix_miscompile.patch
+Requires(post): scrollkeeper
+Requires(postun): scrollkeeper
+Requires(post): GConf2 >= 2.3.3
+Requires(preun): Conf2 >= 2.3.3
+Requires:	dbus-x11
+BuildRequires:	GConf2 >= 2.3.3
 BuildRequires:	ImageMagick
-BuildRequires:	gtksourceview-devel >= 0.3.0
-BuildRequires:	libgnomeui2-devel >= 2.2.0
-BuildRequires:	libglade2.0-devel
-BuildRequires:	libgtkhtml2-devel >= 2.2.0
-BuildRequires:	libgnomeprintui-devel >= 2.2.0
-BuildRequires:	libgnome-menu-devel
-# (abel) external neon support is quite broken? use bundled one instead
-#BuildRequires:	neon-devel >= 0.24.0
-BuildRequires:	scrollkeeper
-BuildRequires:	krb5-devel
-BuildRequires:	intltool libcroco0.6-devel
 BuildRequires:	dbus-devel
-BuildRequires:  desktop-file-utils
-# hell
+BuildRequires:	desktop-file-utils
+BuildRequires:	gettext
+BuildRequires:	gnome-menus-devel
+BuildRequires:	gtkhtml2-devel
+BuildRequires:	gtksourceview-devel
+BuildRequires:	gtksourceview-devel >= 1.1.90
+BuildRequires:	intltool
+BuildRequires:	krb5-devel
 BuildRequires:	krb5-server
+BuildRequires:	libcroco0.6-devel
+BuildRequires:	libglade2.0-devel >= 2.3.0
+BuildRequires:	libgnome-menu-devel
+BuildRequires:	libgnomeprintui-devel >= 2.2.0
+BuildRequires:	libgnomeui2-devel >= 2.2.0
+BuildRequires:	libgtkhtml2-devel >= 2.2.0
+BuildRequires:	libxml2-devel >= 2.4.3
+BuildRequires:	perl(XML::Parser)
+BuildRequires:	scrollkeeper
 %if %build_plf
 BuildRequires:	socks5-devel
 %endif
-Requires(post):		scrollkeeper
-Requires(postun):	scrollkeeper
-Requires(post):		GConf2 >= 2.3.3
-Requires(preun):	GConf2 >= 2.3.3
-Requires: dbus-x11
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 SCREEM (Site CReating and Editing EnvironMent) is an integrated development
@@ -60,24 +56,36 @@ window instead.
 Build options:
 --with plf	Enable socks V5 support
 
+%package	devel
+Summary:	Development files for %{name}
+Group:		Development/C
+
+%description	devel
+Development files for %{name}
+
 %prep
+
 %setup -q
 %patch0 -p1 -b .docbooklocation
 %patch1 -p1 -b .intlsystemwide
-%patch3 -p1 -b .gnome211
-%patch4 -p1 -b .deprecated
+%patch2	-p1
+
+# fix build
+perl -pi -e "s|-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DGNOMEUI_DISABLE_DEPRECATED||g" configure*
 
 %build
+rm -f configure; autoreconf
+
 %configure2_5x \
 %if %build_plf
-	--with-socks=yes \
+    --with-socks=yes \
 %else
-	--with-socks=no \
+    --with-socks=no \
 %endif
-	--with-ssl=yes \
-	--with-included-neon=yes \
-	--disable-update-mime \
-	--disable-update-desktop
+    --disable-schemas-install \
+    --disable-update-mime \
+    --disable-update-desktop \
+    --enable-dbus
 
 %make
 
@@ -114,9 +122,6 @@ desktop-file-install --vendor="" \
 
 %find_lang %{name} --with-gnome
 
-# remove unwanted files
-rm -f %{buildroot}%{_libdir}/%{name}/plugins/*.la
-
 %clean
 rm -rf %{buildroot}
 
@@ -136,14 +141,13 @@ rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-, root, root)
-%doc AUTHORS ChangeLog NEWS README COPYING TODO BUGS
+%doc AUTHORS BUGS COPYING COPYING-DOCS ChangeLog NEWS README TODO
 %{_sysconfdir}/gconf/schemas/screem.schemas
 %{_bindir}/*
 %{_libdir}/%{name}
 %{_datadir}/application-registry/*.applications
 %{_datadir}/applications/*.desktop
-%{_datadir}/mime-info/*
-%{_datadir}/mime/*
+%{_datadir}/mime/packages/*
 %{_datadir}/omf/*
 %{_datadir}/pixmaps/*
 %{_datadir}/%{name}
@@ -154,3 +158,8 @@ rm -rf %{buildroot}
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
 
+%files devel
+%defattr(-, root, root)
+%{_includedir}/*
+%{_libdir}/%{name}/plugins/*.la
+%{_libdir}/pkgconfig/*.pc
