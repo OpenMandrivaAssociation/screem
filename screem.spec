@@ -6,7 +6,7 @@
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		Editors
 URL:		http://www.screem.org/
@@ -16,6 +16,7 @@ Patch0:		screem-0.14.1-docbooklocation.patch
 # (lenny) 0.9.3-2mdk use system wide intltool
 Patch1:		screem-intltool.patch
 Patch2:		fix_miscompile.patch
+Patch3:		screem-0.16.1-desktop-file.patch
 Requires(post): scrollkeeper
 Requires(postun): scrollkeeper
 Requires(post): GConf2 >= 2.3.3
@@ -24,7 +25,6 @@ Requires:	dbus-x11
 BuildRequires:	GConf2 >= 2.3.3
 BuildRequires:	ImageMagick
 BuildRequires:	dbus-devel
-BuildRequires:	desktop-file-utils
 BuildRequires:	gettext
 BuildRequires:	gnome-menus-devel
 BuildRequires:	gtkhtml2-devel
@@ -43,6 +43,7 @@ BuildRequires:	libxml2-devel >= 2.4.3
 BuildRequires:	perl(XML::Parser)
 BuildRequires:	scrollkeeper
 BuildRequires:	popt-devel
+Conflicts:	%{name}-devel < 0.16.1-3
 %if %build_plf
 BuildRequires:	socks5-devel
 %endif
@@ -60,6 +61,7 @@ Build options:
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
+Conflicts:	%{name} < 0.16.1-3
 
 %description	devel
 Development files for %{name}
@@ -70,6 +72,7 @@ Development files for %{name}
 %patch0 -p1 -b .docbooklocation
 %patch1 -p1 -b .intlsystemwide
 %patch2	-p1
+%patch3 -p0 -b .desktop
 
 # fix build
 perl -pi -e "s|-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DGNOMEUI_DISABLE_DEPRECATED||g" configure*
@@ -102,25 +105,6 @@ install -m 644 -D screem.png       %{buildroot}%{_liconsdir}/%{iconname}
 convert screem.png -geometry 32x32 %{buildroot}%{_iconsdir}/%{iconname}
 convert screem.png -geometry 16x16 %{buildroot}%{_miconsdir}/%{iconname}
 
-# menu
-mkdir -p %{buildroot}%{_menudir}
-cat > %{buildroot}%{_menudir}/%{name} <<EOF
-?package(%{name}): \
-    command="%{_bindir}/screem" \
-    icon="%{iconname}" \
-    title="Screem" \
-    longtitle="Website creation environment" \
-    needs="X11" \
-    section="Internet/Web Editors" \
-    xdg="true"
-EOF
-
-desktop-file-install --vendor="" \
-  --remove-category="Application" \
-  --add-category="X-MandrivaLinux-Internet-WebEditors" \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications $RPM_BUILD_ROOT%{_datadir}/applications/*
-
-
 %find_lang %{name} --with-gnome
 
 %clean
@@ -145,7 +129,9 @@ rm -rf %{buildroot}
 %doc AUTHORS BUGS COPYING COPYING-DOCS ChangeLog NEWS README TODO
 %{_sysconfdir}/gconf/schemas/screem.schemas
 %{_bindir}/*
-%{_libdir}/%{name}
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/plugins
+%{_libdir}/%{name}/plugins/*.so
 %{_datadir}/application-registry/*.applications
 %{_datadir}/applications/*.desktop
 %{_datadir}/mime/packages/*
@@ -154,7 +140,6 @@ rm -rf %{buildroot}
 %{_datadir}/%{name}
 
 # menu
-%{_menudir}/%{name}
 %{_liconsdir}/%{name}.png
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
