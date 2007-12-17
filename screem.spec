@@ -47,7 +47,6 @@ Conflicts:	%{name}-devel < 0.16.1-3
 %if %build_plf
 BuildRequires:	socks5-devel
 %endif
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 SCREEM (Site CReating and Editing EnvironMent) is an integrated development
