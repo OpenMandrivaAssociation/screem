@@ -1,13 +1,11 @@
 %define build_plf 0
 %{?_with_plf: %{expand: %%global build_plf 1}}
 
-%define iconname %{name}.png
-
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
-Release:	%mkrel 3
-License:	GPL
+Release:	%mkrel 4
+License:	GPLv2+ and GFDL
 Group:		Editors
 URL:		http://www.screem.org/
 Source0:	http://prdownloads.sourceforge.net/screem/%{name}-%{version}.tar.gz
@@ -66,7 +64,6 @@ Conflicts:	%{name} < 0.16.1-3
 Development files for %{name}
 
 %prep
-
 %setup -q
 %patch0 -p1 -b .docbooklocation
 %patch1 -p1 -b .intlsystemwide
@@ -98,11 +95,10 @@ rm -rf %{buildroot}
 GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
 
 # icons
-mkdir -p %{buildroot}%{_miconsdir} \
-         %{buildroot}%{_iconsdir}
-install -m 644 -D screem.png       %{buildroot}%{_liconsdir}/%{iconname}
-convert screem.png -geometry 32x32 %{buildroot}%{_iconsdir}/%{iconname}
-convert screem.png -geometry 16x16 %{buildroot}%{_miconsdir}/%{iconname}
+mkdir -p %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
+install -m 644 -D screem.png       %{buildroot}%{_iconsdir}/hicolor/48x48/apps/%{name}.png
+convert screem.png -geometry 32x32 %{buildroot}%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+convert screem.png -geometry 16x16 %{buildroot}%{_iconsdir}/hicolor/16x16/apps/%{name}.png
 
 %find_lang %{name} --with-gnome
 
@@ -112,20 +108,22 @@ rm -rf %{buildroot}
 %define schemas screem
 
 %post
-%update_scrollkeeper
+%{update_scrollkeeper}
 %post_install_gconf_schemas %{schemas}
-%update_menus
+%{update_menus}
+%{update_icon_cache hicolor}
 
 %preun
 %preun_uninstall_gconf_schemas %{schemas}
 
 %postun
-%clean_menus
-%clean_scrollkeeper
+%{clean_menus}
+%{clean_scrollkeeper}
+%{clean_icon_cache hicolor}
 
 %files -f %{name}.lang
 %defattr(-, root, root)
-%doc AUTHORS BUGS COPYING COPYING-DOCS ChangeLog NEWS README TODO
+%doc AUTHORS BUGS ChangeLog NEWS README TODO
 %{_sysconfdir}/gconf/schemas/screem.schemas
 %{_bindir}/*
 %dir %{_libdir}/%{name}
@@ -137,11 +135,7 @@ rm -rf %{buildroot}
 %{_datadir}/omf/*
 %{_datadir}/pixmaps/*
 %{_datadir}/%{name}
-
-# menu
-%{_liconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
-%{_iconsdir}/%{name}.png
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 
 %files devel
 %defattr(-, root, root)
