@@ -1,6 +1,3 @@
-%define build_plf 0
-%{?_with_plf: %{expand: %%global build_plf 1}}
-
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
@@ -42,18 +39,12 @@ BuildRequires:	perl(XML::Parser)
 BuildRequires:	scrollkeeper
 BuildRequires:	popt-devel
 Conflicts:	%{name}-devel < 0.16.1-3
-%if %build_plf
-BuildRequires:	socks5-devel
-%endif
 
 %description
 SCREEM (Site CReating and Editing EnvironMent) is an integrated development
 environment for the creation and maintenance of websites and pages. It is
 not a WYSIWYG editor; you are provided with raw html source in its editor
 window instead.
-
-Build options:
---with plf	Enable socks V5 support
 
 %package	devel
 Summary:	Development files for %{name}
@@ -77,11 +68,6 @@ perl -pi -e "s|-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DGNOMEUI_DIS
 rm -f configure; autoreconf
 
 %configure2_5x \
-%if %build_plf
-    --with-socks=yes \
-%else
-    --with-socks=no \
-%endif
     --disable-schemas-install \
     --disable-update-mime \
     --disable-update-desktop \
