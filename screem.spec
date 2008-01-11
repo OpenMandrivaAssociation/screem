@@ -1,7 +1,7 @@
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	GPLv2+ and GFDL
 Group:		Editors
 URL:		http://www.screem.org/
@@ -109,7 +109,7 @@ rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-, root, root)
-%doc AUTHORS BUGS ChangeLog NEWS README TODO
+%doc AUTHORS BUGS NEWS README TODO
 %{_sysconfdir}/gconf/schemas/screem.schemas
 %{_bindir}/*
 %dir %{_libdir}/%{name}
@@ -125,6 +125,7 @@ rm -rf %{buildroot}
 
 %files devel
 %defattr(-, root, root)
+%doc ChangeLog
 %{_includedir}/*
 %{_libdir}/%{name}/plugins/*.la
 %{_libdir}/pkgconfig/*.pc
