@@ -94,19 +94,23 @@ rm -rf %{buildroot}
 
 %define schemas screem
 
+%if %mdkversion < 200900
 %post
 %{update_scrollkeeper}
 %post_install_gconf_schemas %{schemas}
 %{update_menus}
 %{update_icon_cache hicolor}
+%endif
 
 %preun
 %preun_uninstall_gconf_schemas %{schemas}
 
+%if %mdkversion < 200900
 %postun
 %{clean_menus}
 %{clean_scrollkeeper}
 %{clean_icon_cache hicolor}
+%endif
 
 %files -f %{name}.lang
 %defattr(-, root, root)
