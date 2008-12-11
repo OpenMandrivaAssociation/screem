@@ -19,7 +19,7 @@ Requires(post): GConf2 >= 2.3.3
 Requires(preun): GConf2 >= 2.3.3
 Requires:	dbus-x11
 BuildRequires:	GConf2 >= 2.3.3
-BuildRequires:	ImageMagick
+BuildRequires:	imagemagick
 BuildRequires:	dbus-devel
 BuildRequires:	gettext
 BuildRequires:	gnome-menus-devel
