@@ -13,6 +13,7 @@ Patch0:		screem-0.16.1-docbooklocation.patch
 Patch1:		screem-intltool.patch
 Patch2:		fix_miscompile.patch
 Patch3:		screem-0.16.1-desktop-file.patch
+Patch4:		screem-0.16.1-fix-str-fmt.patch
 Requires(post): scrollkeeper
 Requires(postun): scrollkeeper
 Requires(post): GConf2 >= 2.3.3
@@ -61,6 +62,7 @@ Development files for %{name}
 %patch1 -p1 -b .intlsystemwide
 %patch2	-p1
 %patch3 -p0 -b .desktop
+%patch4 -p0 -b .str
 
 # fix build
 perl -pi -e "s|-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DGNOMEUI_DISABLE_DEPRECATED||g" configure*
