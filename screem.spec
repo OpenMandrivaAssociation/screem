@@ -8,7 +8,7 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 URL:		http://www.screem.org/
 Source0:	http://prdownloads.sourceforge.net/screem/%{name}-%{version}.tar.gz
 # (fc) 0.6.2-2mdk fix dtd location in help file
-Patch0:		screem-0.14.1-docbooklocation.patch
+Patch0:		screem-0.16.1-docbooklocation.patch
 # (lenny) 0.9.3-2mdk use system wide intltool
 Patch1:		screem-intltool.patch
 Patch2:		fix_miscompile.patch
