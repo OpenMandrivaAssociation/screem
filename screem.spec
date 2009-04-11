@@ -66,8 +66,7 @@ Development files for %{name}
 perl -pi -e "s|-DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED -DGNOMEUI_DISABLE_DEPRECATED||g" configure*
 
 %build
-rm -f configure; autoreconf
-
+autoreconf -fi
 %configure2_5x \
     --disable-schemas-install \
     --disable-update-mime \
