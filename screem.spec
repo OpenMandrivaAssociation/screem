@@ -1,7 +1,7 @@
 Summary:	Site CReating and Editing EnvironMent
 Name:		screem
 Version:	0.16.1
-Release:	%mkrel 9
+Release:	%mkrel 10
 License:	GPLv2+ and GFDL
 Group:		Editors
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
