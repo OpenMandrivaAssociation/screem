@@ -1,0 +1,121 @@
+--- gdl/gdl-dock-placeholder.c.str	2009-04-11 15:44:13.000000000 +0200
++++ gdl/gdl-dock-placeholder.c	2009-04-11 15:44:22.000000000 +0200
+@@ -302,7 +302,7 @@
+         GdlDockObject *toplevel;
+         
+         if (!gdl_dock_object_is_bound (GDL_DOCK_OBJECT (ph))) {
+-            g_warning (_("Attempt to dock a dock object to an unbound placeholder"));
++            g_warning ("%s",_("Attempt to dock a dock object to an unbound placeholder"));
+             return;
+         }
+         
+--- libegg/recent-files/egg-recent-model.c.str	2009-04-11 15:43:19.000000000 +0200
++++ libegg/recent-files/egg-recent-model.c	2009-04-11 15:43:30.000000000 +0200
+@@ -793,7 +793,7 @@
+ 	error = NULL;
+ 	if (!g_markup_parse_context_parse (ctx, content, strlen (content),
+ 					   &error)) {
+-		g_warning (error->message);
++		g_warning ("%s",error->message);
+ 		g_error_free (error);
+ 		error = NULL;
+ 		goto out;
+--- src/fileops.c.str	2009-04-11 15:48:11.000000000 +0200
++++ src/fileops.c	2009-04-11 15:48:30.000000000 +0200
+@@ -852,6 +852,7 @@
+ 		g_set_error( error,
+ 			g_quark_from_string( SCREEM_SAVE_BACKUP_ERR ),
+ 			(gint)result,
++			"%s",
+ 			gnome_vfs_result_to_string( result ) );
+ 		goto out;
+ 	}
+@@ -998,6 +999,7 @@
+ 		g_set_error( error,
+ 			g_quark_from_string( SCREEM_SAVE_FILE_ERR ),
+ 			(gint)result,
++			"%s",
+ 			gnome_vfs_result_to_string( result ) );
+ 	}
+ 
+--- src/screem-file.c.str	2009-04-11 15:45:31.000000000 +0200
++++ src/screem-file.c	2009-04-11 15:45:49.000000000 +0200
+@@ -260,6 +260,7 @@
+ 	g_set_error( &priv->error, 
+ 			g_quark_from_string( SCREEM_FILE_ERROR ),
+ 			(gint)priv->res,
++			"%s",
+ 			gnome_vfs_result_to_string( priv->res ) );
+ 
+ 	g_signal_emit( G_OBJECT( file ),
+@@ -520,6 +521,7 @@
+ 		g_set_error( &priv->error, 
+ 			g_quark_from_string( SCREEM_FILE_ERROR ),
+ 			(gint)GNOME_VFS_ERROR_CANCELLED,
++			"%s",
+ 			gnome_vfs_result_to_string( GNOME_VFS_ERROR_CANCELLED ) );
+ 	}
+ 	
+--- src/screem-tagfile.c.str	2009-04-11 15:46:52.000000000 +0200
++++ src/screem-tagfile.c	2009-04-11 15:47:40.000000000 +0200
+@@ -500,6 +500,7 @@
+ 				g_set_error( error, 
+ 					G_MARKUP_ERROR, 
+ 					G_MARKUP_ERROR_UNKNOWN_ELEMENT,
++					"%s",
+ 					tmp );
+ 				g_free( tmp );
+ 			}
+@@ -528,6 +529,7 @@
+ 				g_set_error( error, 
+ 					G_MARKUP_ERROR, 
+ 					G_MARKUP_ERROR_UNKNOWN_ELEMENT,
++					"%s",
+ 					tmp );
+ 				g_free( tmp );
+ 			}
+@@ -568,6 +570,7 @@
+ 				g_set_error( error, 
+ 					G_MARKUP_ERROR, 
+ 					G_MARKUP_ERROR_PARSE,
++					"%s",
+ 					tmp );
+ 				g_free( tmp );
+ 			}
+@@ -617,6 +620,7 @@
+ 				g_set_error( error, 
+ 					G_MARKUP_ERROR, 
+ 					G_MARKUP_ERROR_PARSE,
++					"%s",
+ 					tmp );
+ 				g_free( tmp );
+ 				break;
+@@ -665,6 +669,7 @@
+ 				g_set_error( error, 
+ 					G_MARKUP_ERROR, 
+ 					G_MARKUP_ERROR_PARSE,
++					"%s",
+ 					tmp );
+ 				g_free( tmp );
+ 			}
+@@ -732,6 +737,7 @@
+ 			g_set_error( error, 
+ 				G_MARKUP_ERROR, 
+ 				G_MARKUP_ERROR_PARSE,
++				"%s",
+ 				tmp );
+ 			g_free( tmp );
+ 			break;
+--- src/support.c.str	2009-04-11 15:48:42.000000000 +0200
++++ src/support.c	2009-04-11 15:49:14.000000000 +0200
+@@ -1050,8 +1050,8 @@
+ 
+ 	widget = gtk_message_dialog_new( GTK_WINDOW( parent ), 
+ 			GTK_DIALOG_MODAL,
+-			type, buttons, primary );
+-	gtk_message_dialog_format_secondary_text( GTK_MESSAGE_DIALOG( widget ), secondary );
++			type, buttons, "%s", primary );
++	gtk_message_dialog_format_secondary_text( GTK_MESSAGE_DIALOG( widget ), "%s", secondary );
+ 	
+ 	
+ 	gtk_widget_show_all( widget );

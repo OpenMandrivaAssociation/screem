@@ -1,0 +1,15 @@
+--- screem-0.9.3/configure.orig	2004-02-13 13:41:50.821828728 +0100
++++ screem-0.9.3/configure	2004-02-13 13:42:24.421720768 +0100
+@@ -19687,9 +19687,9 @@
+ 
+ # Use the tools built into the package, not the ones that are installed.
+ 
+-INTLTOOL_EXTRACT='$(top_builddir)/intltool-extract'
+-INTLTOOL_MERGE='$(top_builddir)/intltool-merge'
+-INTLTOOL_UPDATE='$(top_builddir)/intltool-update'
++INTLTOOL_EXTRACT='intltool-extract'
++INTLTOOL_MERGE='intltool-merge'
++INTLTOOL_UPDATE='intltool-update'
+ 
+ 
+ 

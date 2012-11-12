@@ -1,0 +1,10 @@
+--- screem-0.16.1/docs/C/screem.xml.docbooklocation	2005-10-10 21:17:58.000000000 +0200
++++ screem-0.16.1/docs/C/screem.xml	2009-04-11 15:18:22.000000000 +0200
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+-	"/usr/share/sgml/docbook/dtd/xml/4.1.2/docbookx.dtd" [
++	"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+ 	<!ENTITY legal SYSTEM "legal.xml">
+ <!ENTITY appversion "0.14.0">
+ <!ENTITY manrevision "0.0.4">

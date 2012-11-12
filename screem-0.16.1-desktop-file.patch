@@ -1,0 +1,15 @@
+--- screem.desktop.in.orig	2007-09-07 21:20:18.000000000 +0800
++++ screem.desktop.in	2007-09-07 21:21:08.000000000 +0800
+@@ -2,9 +2,9 @@
+ _Name=Screem HTML/XML Editor
+ _Comment=Website editor and management system
+ Exec=screem %U
+-Icon=screem.png
+-Terminal=0
++Icon=screem
++Terminal=false
+ Type=Application
+-Categories=Application;Development;
++Categories=Development;WebDevelopment;
+ StartupNotify=true
+ MimeType=text/html;application/xhtml+xml;text/xml;text/sgml;application/x-php;application/x-php-source;application/x-asp;text/vnd.wap.wml;image/svg;text/x-javascript;text/javascript;application/x-screem;application/x-screem-tag-tree;text/css;text/plain;text/x-perl;text/x-java;image/svg;text/x-php;text/mathml;text/x-dtd;text/x-sql
