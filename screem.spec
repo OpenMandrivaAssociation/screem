@@ -5,7 +5,7 @@ Release:	%mkrel 10
 License:	GPLv2+ and GFDL
 Group:		Editors
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-URL:		http://www.screem.org/
+URL:		https://www.screem.org/
 Source0:	http://prdownloads.sourceforge.net/screem/%{name}-%{version}.tar.gz
 # (fc) 0.6.2-2mdk fix dtd location in help file
 Patch0:		screem-0.16.1-docbooklocation.patch
