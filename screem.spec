@@ -19,6 +19,11 @@ Requires(postun): scrollkeeper
 Requires(post): GConf2 >= 2.3.3
 Requires(preun): GConf2 >= 2.3.3
 Requires:	dbus-x11
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	GConf2 >= 2.3.3
 BuildRequires:	imagemagick
 BuildRequires:	dbus-devel
